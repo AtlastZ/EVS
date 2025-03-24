@@ -1,3 +1,4 @@
+# SQLite3 for development and test, PostgreSQL for production
 # PostgreSQL. Versions 9.3 and up are supported.
 #
 # Install the pg driver:
@@ -13,16 +14,13 @@
 # gem "pg"
 #
 default: &default
-  adapter: postgresql
-  encoding: unicode
-  # For details on connection pooling, see Rails configuration guide
-  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  adapter: sqlite3
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-
+  timeout: 5000
 
 development:
   <<: *default
-  database: evs_development
+  database: db/development.sqlite3
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -56,7 +54,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: evs_test
+  database: db/test.sqlite3
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -79,20 +77,11 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  primary: &primary_production
-    <<: *default
-    database: evs_production
-    username: evs
-    password: <%= ENV["EVS_DATABASE_PASSWORD"] %>
-  cache:
-    <<: *primary_production
-    database: evs_production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: evs_production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: evs_production_cable
-    migrations_paths: db/cable_migrate
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  database: evs_production
+  username: evs
+  password: <%= ENV["EVS_DATABASE_PASSWORD"] %>
+  host: <%= ENV["EVS_DATABASE_HOST"] %>
+  port: <%= ENV["EVS_DATABASE_PORT"] || 5432 %>

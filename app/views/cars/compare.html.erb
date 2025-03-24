@@ -1,0 +1,173 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-4xl font-bold">Compare Electric Vehicles</h1>
+    <%= link_to "Back to Cars", cars_path, class: "text-blue-600 hover:text-blue-800" %>
+  </div>
+
+  <!-- Car Selection Form -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <%= form_tag compare_cars_path, method: :get, class: "space-y-4" do %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- First Car Selection -->
+        <div>
+          <%= label_tag :car1_id, "First Car", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= select_tag :car1_id, 
+              options_from_collection_for_select(@cars, :id, :full_name, @car1&.id),
+              class: "w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+        </div>
+
+        <!-- Second Car Selection -->
+        <div>
+          <%= label_tag :car2_id, "Second Car", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= select_tag :car2_id, 
+              options_from_collection_for_select(@cars.where.not(id: @car1&.id), :id, :full_name, @car2&.id),
+              include_blank: "Select a car to compare",
+              class: "w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <%= submit_tag "Compare", class: "bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @car2 %>
+    <div class="grid grid-cols-2 gap-8">
+      <!-- Car 1 -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-6">
+          <h2 class="text-2xl font-bold mb-4"><%= @car1.brand %> <%= @car1.name %></h2>
+          <% if @car1.image.attached? %>
+            <%= image_tag @car1.image, class: "w-full h-64 object-cover rounded-lg mb-6" %>
+          <% else %>
+            <div class="w-full h-64 bg-gray-200 flex items-center justify-center rounded-lg mb-6">
+              <span class="text-gray-400">No image available</span>
+            </div>
+          <% end %>
+          <p class="text-3xl font-bold text-blue-600 mb-6">$<%= number_with_delimiter(@car1.price) %></p>
+        </div>
+      </div>
+
+      <!-- Car 2 -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-6">
+          <h2 class="text-2xl font-bold mb-4"><%= @car2.brand %> <%= @car2.name %></h2>
+          <% if @car2.image.attached? %>
+            <%= image_tag @car2.image, class: "w-full h-64 object-cover rounded-lg mb-6" %>
+          <% else %>
+            <div class="w-full h-64 bg-gray-200 flex items-center justify-center rounded-lg mb-6">
+              <span class="text-gray-400">No image available</span>
+            </div>
+          <% end %>
+          <p class="text-3xl font-bold text-blue-600 mb-6">$<%= number_with_delimiter(@car2.price) %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Specifications Table -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden mt-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-6">Specifications</h2>
+        
+        <!-- Key Specifications -->
+        <div class="mb-8">
+          <h3 class="text-xl font-semibold mb-4">Key Specifications</h3>
+          <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="font-medium">Range</div>
+              <div class="grid grid-cols-2 gap-4">
+                <div><%= @car1.range %> miles</div>
+                <div><%= @car2.range %> miles</div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="font-medium">Battery Capacity</div>
+              <div class="grid grid-cols-2 gap-4">
+                <div><%= @car1.battery_capacity %> kWh</div>
+                <div><%= @car2.battery_capacity %> kWh</div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="font-medium">Charging Time (0-80%)</div>
+              <div class="grid grid-cols-2 gap-4">
+                <div><%= @car1.charging_time %> minutes</div>
+                <div><%= @car2.charging_time %> minutes</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Performance -->
+        <div class="mb-8">
+          <h3 class="text-xl font-semibold mb-4">Performance</h3>
+          <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="font-medium">Power Output</div>
+              <div class="grid grid-cols-2 gap-4">
+                <div><%= @car1.power %> kW</div>
+                <div><%= @car2.power %> kW</div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="font-medium">Torque</div>
+              <div class="grid grid-cols-2 gap-4">
+                <div><%= @car1.torque %> Nm</div>
+                <div><%= @car2.torque %> Nm</div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="font-medium">0-60 mph</div>
+              <div class="grid grid-cols-2 gap-4">
+                <div><%= @car1.acceleration %> seconds</div>
+                <div><%= @car2.acceleration %> seconds</div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="font-medium">Top Speed</div>
+              <div class="grid grid-cols-2 gap-4">
+                <div><%= @car1.top_speed %> mph</div>
+                <div><%= @car2.top_speed %> mph</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dimensions & Weight -->
+        <div>
+          <h3 class="text-xl font-semibold mb-4">Dimensions & Weight</h3>
+          <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="font-medium">Dimensions (L×W×H)</div>
+              <div class="grid grid-cols-2 gap-4">
+                <div><%= @car1.dimensions %></div>
+                <div><%= @car2.dimensions %></div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="font-medium">Weight</div>
+              <div class="grid grid-cols-2 gap-4">
+                <div><%= @car1.weight %> kg</div>
+                <div><%= @car2.weight %> kg</div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="font-medium">Cargo Space</div>
+              <div class="grid grid-cols-2 gap-4">
+                <div><%= @car1.cargo_space %> L</div>
+                <div><%= @car2.cargo_space %> L</div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="font-medium">Seats</div>
+              <div class="grid grid-cols-2 gap-4">
+                <div><%= @car1.seats %></div>
+                <div><%= @car2.seats %></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

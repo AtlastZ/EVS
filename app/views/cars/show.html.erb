@@ -1,0 +1,85 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="p-6">
+      <div class="flex justify-between items-start mb-6">
+        <h1 class="text-3xl font-bold"><%= @car.full_name %></h1>
+        <%= link_to "Compare with Another Car", compare_car_path(@car), class: "bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" %>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <%# Key Specifications %>
+        <div>
+          <h2 class="text-xl font-semibold mb-4">Key Specifications</h2>
+          <div class="space-y-4">
+            <div class="flex justify-between">
+              <span class="text-gray-600">Price</span>
+              <span class="font-medium"><%= @car.price_formatted %></span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Range</span>
+              <span class="font-medium"><%= @car.range_with_unit %></span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Battery Capacity</span>
+              <span class="font-medium"><%= @car.battery_capacity_with_unit %></span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Charging Time</span>
+              <span class="font-medium"><%= @car.charging_time %> minutes</span>
+            </div>
+          </div>
+        </div>
+
+        <%# Performance %>
+        <div>
+          <h2 class="text-xl font-semibold mb-4">Performance</h2>
+          <div class="space-y-4">
+            <div class="flex justify-between">
+              <span class="text-gray-600">Power Output</span>
+              <span class="font-medium"><%= @car.power_with_unit %></span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Torque</span>
+              <span class="font-medium"><%= @car.torque_with_unit %></span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">0-100 km/h</span>
+              <span class="font-medium"><%= @car.acceleration_with_unit %></span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Top Speed</span>
+              <span class="font-medium"><%= @car.top_speed_with_unit %></span>
+            </div>
+          </div>
+        </div>
+
+        <%# Dimensions and Weight %>
+        <div>
+          <h2 class="text-xl font-semibold mb-4">Dimensions & Weight</h2>
+          <div class="space-y-4">
+            <div class="flex justify-between">
+              <span class="text-gray-600">Weight</span>
+              <span class="font-medium"><%= @car.weight_with_unit %></span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Dimensions</span>
+              <span class="font-medium"><%= @car.dimensions %></span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Seats</span>
+              <span class="font-medium"><%= @car.seats %></span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Cargo Space</span>
+              <span class="font-medium"><%= @car.cargo_space %> L</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <%= link_to "Back to Cars", cars_path, class: "text-indigo-600 hover:text-indigo-800" %>
+      </div>
+    </div>
+  </div>
+</div>

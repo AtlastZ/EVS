@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  brand: MyString
+  model_year: 1
+  price: 9.99
+  range: 1
+  battery_capacity: 9.99
+  charging_time: 1
+  power: 1
+  torque: 1
+  acceleration: 9.99
+  top_speed: 1
+  weight: 9.99
+  dimensions: MyString
+  seats: 1
+  cargo_space: 9.99
+
+two:
+  name: MyString
+  brand: MyString
+  model_year: 1
+  price: 9.99
+  range: 1
+  battery_capacity: 9.99
+  charging_time: 1
+  power: 1
+  torque: 1
+  acceleration: 9.99
+  top_speed: 1
+  weight: 9.99
+  dimensions: MyString
+  seats: 1
+  cargo_space: 9.99
