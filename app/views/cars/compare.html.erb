@@ -9,20 +9,43 @@
     <%= form_tag compare_cars_path, method: :get, class: "space-y-4" do %>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- First Car Selection -->
-        <div>
+        <div data-controller="searchable-select" 
+             data-action="click@window->searchable-select#clickOutside"
+             data-searchable-select-cars-value="<%= @cars.to_json(only: [:id], methods: [:full_name]) %>">
           <%= label_tag :car1_id, "First Car", class: "block text-sm font-medium text-gray-700 mb-1" %>
-          <%= select_tag :car1_id, 
-              options_from_collection_for_select(@cars, :id, :full_name, @car1&.id),
-              class: "w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+          <%= hidden_field_tag :car1_id, @car1&.id %>
+          <div class="relative">
+            <%= text_field_tag :car1_search, @car1&.full_name,
+                class: "w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500",
+                placeholder: "Search car...",
+                data: { 
+                  searchable_select_target: "input",
+                  action: "input->searchable-select#filter focus->searchable-select#showDropdown"
+                } %>
+            <div class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto"
+                 data-searchable-select-target="dropdown">
+            </div>
+          </div>
         </div>
 
         <!-- Second Car Selection -->
-        <div>
+        <div data-controller="searchable-select" 
+             data-action="click@window->searchable-select#clickOutside"
+             data-searchable-select-cars-value="<%= @cars.where.not(id: @car1&.id).to_json(only: [:id], methods: [:full_name]) %>">
           <%= label_tag :car2_id, "Second Car", class: "block text-sm font-medium text-gray-700 mb-1" %>
-          <%= select_tag :car2_id, 
-              options_from_collection_for_select(@cars.where.not(id: @car1&.id), :id, :full_name, @car2&.id),
-              include_blank: "Select a car to compare",
-              class: "w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+          <%= hidden_field_tag :car2_id, @car2&.id %>
+          <div class="relative">
+            <%= text_field_tag :car2_search, @car2&.full_name,
+                class: "w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500",
+                placeholder: "Search car...",
+                data: { 
+                  searchable_select_target: "input",
+                  action: "input->searchable-select#filter focus->searchable-select#showDropdown"
+                } %>
+            <div class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto"
+                 data-searchable-select-target="dropdown">
+            </div>
+          </div>
         </div>
       </div>
 
