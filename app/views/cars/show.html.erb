@@ -3,7 +3,7 @@
     <div class="p-6">
       <div class="flex justify-between items-start mb-6">
         <h1 class="text-3xl font-bold"><%= @car.full_name %></h1>
-        <%= link_to "Compare with Another Car", compare_car_path(@car), class: "bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" %>
+        <%= link_to "Compare with Another Car", compare_cars_path(car1_id: @car.id), class: "bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" %>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
