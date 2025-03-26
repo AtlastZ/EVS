@@ -35,3 +35,7 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+development.sqlite3*
+test.sqlite3*
+production.sqlite3*
