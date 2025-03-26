@@ -12,6 +12,12 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "cars#index"
 
+  # Admin routes
+  namespace :admin do
+    root to: "cars#index"
+    resources :cars
+  end
+
   # Cars resources
   resources :cars, only: [:index, :show] do
     collection do
